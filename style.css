@@ -99,6 +99,7 @@
 html {
   height: 100%;
   scroll-padding-top: env(safe-area-inset-top, 0px);
+  scroll-behavior: smooth;
 }
 
 * {
@@ -256,6 +257,11 @@ nav button {
   padding: 6px 14px;
   border-radius: 999px;
   cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+nav button:active {
+  transform: scale(.96);
 }
 
 /* Menu yang sedang aktif */
@@ -307,6 +313,18 @@ nav button[aria-current="true"] {
 
 .view.on {
   display: block;
+  animation: view-enter .35s ease both;
+}
+
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero {
@@ -665,6 +683,10 @@ footer b {
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   * {
     animation: none !important;
     transition: none !important;
