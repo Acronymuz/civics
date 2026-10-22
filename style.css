@@ -619,6 +619,105 @@ td:nth-child(3)   { background: var(--gbg); }  /* kolom Bercanda sehat */
   font-weight: 800;
 }
 
+.score-popup {
+  width: min(90vw, 440px);
+  max-width: none;
+  padding: 0;
+  overflow: visible;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+}
+
+.score-popup::backdrop {
+  background: rgb(20 18 12 / 58%);
+  animation: popup-fade-in .25s ease-out both;
+}
+
+.score-popup__content {
+  position: relative;
+  padding: 30px 24px 24px;
+  overflow: hidden;
+  text-align: center;
+  background: var(--surface);
+  border: 3px solid var(--green);
+  border-radius: 28px;
+  box-shadow: 0 18px 50px rgb(0 0 0 / 25%);
+  animation: popup-enter .45s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.score-popup__sparkle {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 2.8rem;
+  animation: sparkle-bounce .8s ease-in-out infinite alternate;
+}
+
+.score-popup__eyebrow {
+  margin: 0 0 6px;
+  color: var(--green);
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.score-popup__content h2 {
+  color: var(--red);
+  font-size: 2rem;
+}
+
+.score-popup__score {
+  margin: 12px 0 4px;
+  font: 700 1.35rem 'Fredoka', 'Nunito', sans-serif;
+}
+
+.score-popup__content > p:not(.score-popup__eyebrow):not(.score-popup__score) {
+  margin: 6px 0 18px;
+}
+
+.score-popup__confetti {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 8px;
+  height: 13px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.score-popup.is-celebrating .score-popup__confetti {
+  animation: confetti-burst .9s ease-out both;
+  box-shadow:
+    -120px 70px 0 var(--orange),
+    -82px 18px 0 var(--green),
+    -42px 80px 0 #7A5CFF,
+    0 12px 0 var(--red),
+    44px 70px 0 var(--orange),
+    84px 20px 0 var(--green),
+    120px 78px 0 #7A5CFF;
+}
+
+@keyframes popup-enter {
+  from { opacity: 0; transform: translateY(18px) scale(.88); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popup-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes sparkle-bounce {
+  from { transform: scale(.9) rotate(-8deg); }
+  to   { transform: scale(1.08) rotate(8deg); }
+}
+
+@keyframes confetti-burst {
+  0%   { opacity: 0; transform: translate(-50%, 20px) rotate(0); }
+  20%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -42px) rotate(180deg); }
+}
+
 
 /* ==========================================================================
   14. TAB, LANGKAH LAPOR, FOOTER
