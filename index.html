@@ -452,6 +452,18 @@
     <small>Sumber: UNICEF Indonesia (2020), JPPI (2025), Widaningsih dkk. (2024).</small>
   </footer>
 
+  <dialog class="score-popup" id="score-popup" aria-labelledby="score-popup-title" aria-describedby="score-popup-message">
+    <div class="score-popup__content">
+      <span class="score-popup__sparkle" aria-hidden="true">✨</span>
+      <p class="score-popup__eyebrow">HASIL KUIS</p>
+      <h2 id="score-popup-title">Selamat!</h2>
+      <p class="score-popup__score" id="score-popup-score"></p>
+      <p id="score-popup-message"></p>
+      <button class="btn g" id="score-popup-close" type="button">Tutup</button>
+      <span class="score-popup__confetti" aria-hidden="true"></span>
+    </div>
+  </dialog>
+
 
   <!-- =====================================================================
        JAVASCRIPT
@@ -577,6 +589,24 @@
           done  : (opsional) fungsi yang dipanggil saat kuis selesai
        --------------------------------------------------------------- */
 
+    var scorePopup = $('score-popup');
+    var scorePopupTitle = $('score-popup-title');
+    var scorePopupScore = $('score-popup-score');
+    var scorePopupMessage = $('score-popup-message');
+
+    $('score-popup-close').addEventListener('click', function () {
+      scorePopup.close();
+    });
+
+    function showScorePopup(score, total, message) {
+      var passed = score >= total / 2;
+      scorePopupTitle.textContent = passed ? 'Selamat!' : 'Tetap semangat!';
+      scorePopupScore.textContent = 'Skor kamu: ' + score + ' dari ' + total;
+      scorePopupMessage.textContent = message;
+      scorePopup.classList.toggle('is-celebrating', passed);
+      scorePopup.showModal();
+    }
+
     function quiz(id, title, qs, done) {
       var box   = $(id);
       var index = 0;   // nomor soal saat ini
@@ -603,6 +633,7 @@
         };
         box.replaceChildren(heading, result, retry);
 
+        showScorePopup(score, qs.length, message);
         if (done) done(score);
       }
 
