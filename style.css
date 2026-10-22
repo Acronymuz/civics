@@ -1,0 +1,676 @@
+/* ==========================================================================
+   PANTAU – Petrusian Aksi Nyata Tolak perUndungan
+   Stylesheet
+
+   Daftar isi:
+   1. Variabel warna (tema terang & gelap)
+   2. Reset & gaya dasar
+   3. Layar pembuka (loading)
+   4. Teks berjalan (marquee)
+   5. Header & navigasi
+   6. Tombol
+   7. Halaman (view) & Hero
+   8. Kartu 4MP
+   9. Strip & grafik
+  10. Judul & teks pengantar
+  11. Accordion (details/summary)
+  12. Tabel, catatan, dan chips
+  13. Kuis
+  14. Tab, langkah lapor, footer
+  15. Aksesibilitas (kurangi animasi)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIABEL WARNA
+   ========================================================================== */
+
+/* Tema terang (bawaan) */
+:root {
+  color-scheme: light;
+
+  --bg:      #FFF6DC;  /* latar halaman */
+  --hero:    #FFE3A0;  /* latar hero & loading */
+  --surface: #FFFFFF;  /* latar kartu */
+  --ink:     #2F2A1F;  /* warna teks utama */
+  --muted:   #6B6350;  /* warna teks redup */
+  --line:    #2F2A1F;  /* warna garis tepi */
+
+  --green:   #2E7D32;
+  --orange:  #F07F2D;
+  --red:     #C8102E;
+
+  --gbg:     #CFEAC6;  /* latar hijau muda */
+  --ybg:     #FFF3B0;  /* latar kuning muda */
+  --obg:     #FFC99A;  /* latar oranye muda */
+  --rbg:     #F6A5A5;  /* latar merah muda */
+
+  /* Ruang aman pada layar berponi (HP) */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Tema gelap otomatis mengikuti pengaturan perangkat */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --bg:      #1F1B12;
+    --hero:    #3A3016;
+    --surface: #2B2618;
+    --ink:     #FFF3D6;
+    --muted:   #CFC4A3;
+    --line:    #FFF3D6;
+
+    --green:   #7FD184;
+
+    --gbg:     #25402A;
+    --ybg:     #4A4218;
+    --obg:     #5A3B1E;
+    --rbg:     #5A2527;
+  }
+}
+
+/* Tema gelap manual (data-theme="dark") */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg:      #1F1B12;
+  --hero:    #3A3016;
+  --surface: #2B2618;
+  --ink:     #FFF3D6;
+  --muted:   #CFC4A3;
+  --line:    #FFF3D6;
+
+  --green:   #7FD184;
+
+  --gbg:     #25402A;
+  --ybg:     #4A4218;
+  --obg:     #5A3B1E;
+  --rbg:     #5A2527;
+}
+
+
+/* ==========================================================================
+   2. RESET & GAYA DASAR
+   ========================================================================== */
+
+html {
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 600 1.05rem/1.65 'Nunito', system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+button,
+.btn {
+  font-family: 'Fredoka', 'Nunito', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+
+/* Pembungkus konten agar rata tengah */
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+/* Cincin fokus untuk pengguna keyboard */
+button:focus-visible,
+summary:focus-visible,
+a:focus-visible {
+  outline: 4px solid #7A5CFF;
+  outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   3. LAYAR PEMBUKA (LOADING)
+   ========================================================================== */
+
+#load {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: var(--hero);
+  transition: opacity .5s;
+}
+
+#load h1 {
+  font-size: 4rem;
+  color: var(--green);
+  letter-spacing: .04em;
+}
+
+/* Bilah progres */
+#load i {
+  display: block;
+  width: 200px;
+  height: 8px;
+  margin: 16px auto 0;
+  background: var(--surface);
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+#load i:after {
+  content: "";
+  display: block;
+  height: 100%;
+  background: var(--orange);
+  animation: ld 1.4s forwards;
+}
+
+@keyframes ld {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+
+/* ==========================================================================
+   4. TEKS BERJALAN (MARQUEE)
+   ========================================================================== */
+
+.marq {
+  background: var(--green);
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 6px 0;
+}
+
+.marq span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: mq 28s linear infinite;
+}
+
+@keyframes mq {
+  to { transform: translateX(-100%); }
+}
+
+
+/* ==========================================================================
+   5. HEADER & NAVIGASI
+   ========================================================================== */
+
+header.bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--bg);
+  border-bottom: 3px solid var(--line);
+}
+
+header.bar .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo {
+  margin-right: auto;
+  font: 700 1.6rem 'Fredoka';
+  color: var(--green);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+nav button {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Menu yang sedang aktif */
+nav button[aria-current="true"] {
+  background: var(--orange);
+  color: #fff;
+}
+
+
+/* ==========================================================================
+   6. TOMBOL
+   ========================================================================== */
+
+.btn {
+  display: inline-block;
+  border: 0;
+  background: var(--orange);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 9px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .28);
+}
+
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .28);
+}
+
+/* Varian warna tombol */
+.btn.g     { background: var(--green); color: #fff; }  /* hijau */
+.btn.r     { background: var(--red); }                 /* merah */
+.btn.y     { background: #B58A00; }                    /* kuning tua */
+.btn.brown { background: #8A6D3B; }                    /* cokelat */
+
+
+/* ==========================================================================
+   7. HALAMAN (VIEW) & HERO
+   ========================================================================== */
+
+/* Hanya satu halaman yang tampil (class "on" diatur oleh JavaScript) */
+.view {
+  display: none;
+  padding: 30px 0 50px;
+}
+
+.view.on {
+  display: block;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  background: var(--hero);
+  border-radius: 32px;
+  padding: 30px;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 12vw, 5rem);
+  color: var(--green);
+}
+
+.hero p {
+  max-width: 46ch;
+}
+
+/* Ilustrasi dua siswa */
+.shield {
+  width: 250px;
+  max-width: 100%;
+  margin-left: auto;
+  font-size: 6rem;
+  animation: bob 3s ease-in-out infinite;
+}
+
+@keyframes bob {
+  50% { transform: translateY(-8px); }
+}
+
+
+/* ==========================================================================
+   8. KARTU 4MP
+   ========================================================================== */
+
+.four {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.c {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 22px;
+  color: var(--ink);
+}
+
+.c h3 {
+  font-size: 1.5rem;
+}
+
+.c p {
+  flex: 1;
+  margin: 0;
+}
+
+/* Warna kartu: g = hijau, y = kuning, o = oranye, r = merah */
+.c.g { background: var(--gbg); }
+.c.y { background: var(--ybg); }
+.c.o { background: var(--obg); }
+.c.r { background: var(--rbg); }
+
+.c.g h3 { color: var(--green); }
+.c.y h3 { color: #B58A00; }
+.c.o h3 { color: #D2691E; }
+.c.r h3 { color: var(--red); }
+
+/* Dua kolom kartu (halaman Lapor) */
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+
+/* ==========================================================================
+   9. STRIP & GRAFIK
+   ========================================================================== */
+
+.strip {
+  margin: 24px 0;
+  padding: 8px;
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  font: 700 1.6rem 'Fredoka';
+  letter-spacing: .3em;
+  border-radius: 12px;
+}
+
+.chart {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 20px;
+}
+
+.chart .lead {
+  margin: 0;
+}
+
+/* Batang grafik */
+.bars {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  height: 190px;
+  margin-top: 10px;
+}
+
+.bars div {
+  flex: 1;
+  min-height: 26px;
+  padding-top: 4px;
+  background: var(--orange);
+  color: #fff;
+  text-align: center;
+  font: 600 .95rem 'Fredoka';
+  border-radius: 10px 10px 0 0;
+}
+
+.bars div:last-child {
+  background: var(--red);
+}
+
+/* Label tahun di bawah grafik */
+.lbl {
+  display: flex;
+  gap: 12px;
+  text-align: center;
+}
+
+.lbl span {
+  flex: 1;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+
+/* ==========================================================================
+  10. JUDUL & TEKS PENGANTAR
+   ========================================================================== */
+
+h2.t {
+  font-size: clamp(1.9rem, 6vw, 2.6rem);
+  color: var(--green);
+}
+
+/* Judul bagian di halaman Home (rata tengah, merah) */
+h2.t.center {
+  margin-top: 34px;
+  text-align: center;
+  color: var(--red);
+}
+
+.lead {
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.lead.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Sub-judul di dalam halaman */
+.sub-title {
+  margin-top: 28px;
+}
+
+
+/* ==========================================================================
+  11. ACCORDION (DETAILS / SUMMARY)
+   ========================================================================== */
+
+details {
+  margin: 12px 0;
+  padding: 4px 18px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: 20px;
+}
+
+summary {
+  padding: 12px 0;
+  font: 600 1.25rem 'Fredoka';
+  cursor: pointer;
+}
+
+details[open] summary {
+  color: var(--orange);
+}
+
+details p,
+details ul {
+  margin: 0 0 14px;
+}
+
+
+/* ==========================================================================
+  12. TABEL, CATATAN, DAN CHIPS
+   ========================================================================== */
+
+/* Tabel bisa digeser ke samping di layar kecil */
+.tbl {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px 10px;
+  border: 2px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th                { background: var(--ybg); }
+td:nth-child(2)   { background: var(--rbg); }  /* kolom Perundungan */
+td:nth-child(3)   { background: var(--gbg); }  /* kolom Bercanda sehat */
+
+.note {
+  margin: 14px 0;
+  padding: 12px 16px;
+  background: var(--ybg);
+  border-left: 8px solid var(--orange);
+  border-radius: 12px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chips span {
+  padding: 4px 14px;
+  background: var(--gbg);
+  border-radius: 999px;
+}
+
+.chips + p {
+  margin-top: 12px;
+}
+
+
+/* ==========================================================================
+  13. KUIS
+   ========================================================================== */
+
+.quiz {
+  margin: 22px 0;
+  padding: 22px;
+  background: var(--surface);
+  border: 3px solid var(--line);
+  border-radius: 26px;
+}
+
+/* Pilihan jawaban */
+.opt {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px 16px;
+  background: var(--bg);
+  color: var(--ink);
+  text-align: left;
+  font: 600 1rem 'Nunito';
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.opt.ok { background: var(--gbg); border-color: var(--green); }  /* jawaban benar */
+.opt.no { background: var(--rbg); border-color: var(--red); }    /* jawaban salah */
+
+/* Teks umpan balik */
+.fb {
+  min-height: 1.6em;
+  font-weight: 800;
+}
+
+
+/* ==========================================================================
+  14. TAB, LANGKAH LAPOR, FOOTER
+   ========================================================================== */
+
+/* Tab "murid / guru" */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.tabs button {
+  flex: 1;
+}
+
+/* Daftar langkah bernomor */
+.steps {
+  counter-reset: s;
+  list-style: none;
+  padding: 0;
+}
+
+.steps li {
+  counter-increment: s;
+  position: relative;
+  margin: 10px 0;
+  padding: 12px 16px 12px 58px;
+  background: var(--surface);
+  border-radius: 18px;
+}
+
+.steps li:before {
+  content: counter(s);
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  display: grid;
+  place-content: center;
+  width: 34px;
+  height: 34px;
+  background: var(--orange);
+  color: #fff;
+  font: 700 1.1rem 'Fredoka';
+  border-radius: 50%;
+}
+
+footer {
+  padding: 24px 18px 36px;
+  background: var(--gbg);
+  text-align: center;
+}
+
+footer b {
+  color: var(--red);
+  font: 700 1.3rem 'Fredoka';
+}
+
+
+/* ==========================================================================
+  15. AKSESIBILITAS – KURANGI ANIMASI
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .marq span {
+    padding-left: 0;
+  }
+}
