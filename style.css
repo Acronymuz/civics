@@ -795,3 +795,267 @@ footer b {
     padding-left: 0;
   }
 }
+
+/* ==========================================================================
+   16. KUIS: HEADER DAN TIPE SOAL
+   ========================================================================== */
+
+.btn.small {
+  font-size: .88rem;
+  padding: 6px 14px;
+}
+
+/* Indikator progres di kartu Home */
+.quiz-progress {
+  margin: 6px 0 12px;
+  color: var(--muted);
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.quiz-progress:not(:empty) {
+  color: var(--green);
+}
+
+/* Kepala kuis */
+.qz-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.qz-title {
+  margin-right: auto;
+  color: var(--green);
+  font: 700 1.05rem 'Fredoka', sans-serif;
+}
+
+.qz-count,
+.qz-score {
+  padding: 3px 12px;
+  background: var(--bg);
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  font-size: .88rem;
+  font-weight: 800;
+}
+
+.qz-bar {
+  height: 10px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  background: var(--bg);
+  border: 2px solid var(--line);
+  border-radius: 999px;
+}
+
+.qz-bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--green);
+  transition: width .3s ease;
+}
+
+.qz-story {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  background: var(--ybg);
+  border-left: 5px solid var(--orange);
+  border-radius: 12px;
+}
+
+.qz-q {
+  margin: 0 0 14px;
+  font-size: 1.12rem;
+  line-height: 1.45;
+}
+
+.qz-q:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 4px;
+}
+
+.qz-hint {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.qz-resume {
+  border-left: 5px solid var(--green);
+}
+
+.qz-answer {
+  margin: 6px 0 0;
+  color: var(--red);
+  font-size: .95rem;
+  font-weight: 700;
+}
+
+.qz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* Pilihan yang sedang dicentang pada soal "pilih 3" */
+.opt.picked {
+  background: var(--obg);
+  border-color: var(--orange);
+  box-shadow: inset 0 0 0 2px var(--orange);
+}
+
+.opt:disabled {
+  cursor: default;
+  opacity: .95;
+}
+
+/* Soal mengurutkan */
+.qz-sort {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.qz-sort__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 3px solid var(--line);
+  border-radius: 16px;
+}
+
+.qz-sort__num {
+  display: grid;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  font: 700 .9rem 'Fredoka', sans-serif;
+}
+
+.qz-sort__txt {
+  flex: 1 1 auto;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.qz-sort__move {
+  display: flex;
+  gap: 6px;
+}
+
+.qz-sort__btn {
+  width: 34px;
+  height: 34px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.qz-sort__btn:disabled {
+  cursor: default;
+  opacity: .35;
+}
+
+/* Soal menjodohkan */
+.qz-match {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 3px solid var(--line);
+  border-radius: 16px;
+}
+
+.qz-match__left {
+  font-weight: 800;
+}
+
+.qz-match__select {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  font: 600 .95rem 'Nunito', sans-serif;
+}
+
+.qz-match.ok {
+  background: var(--gbg);
+  border-color: var(--green);
+}
+
+.qz-match.no {
+  background: var(--rbg);
+  border-color: var(--red);
+}
+
+.qz-match .qz-answer {
+  display: block;
+}
+
+@media (min-width: 620px) {
+  .qz-match {
+    grid-template-columns: minmax(160px, 42%) 1fr;
+    align-items: center;
+  }
+
+  .qz-match .qz-answer {
+    grid-column: 1 / -1;
+  }
+}
+/* Atribut hidden harus menang atas display milik komponen */
+[hidden] {
+  display: none !important;
+}
+
+/* Layar sempit: logo di atas, navigasi di bawahnya */
+@media (max-width: 620px) {
+  header.bar .wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  header.bar .wrap > .logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  header.bar .wrap > nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-left: 0;
+  }
+
+  /* Kartu urutan: teks dapat lebar penuh, tombol pindah di baris bawah */
+  .qz-sort__item {
+    flex-wrap: wrap;
+  }
+
+  .qz-sort__txt {
+    flex: 1 1 calc(100% - 46px);
+  }
+
+  .qz-sort__move {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
